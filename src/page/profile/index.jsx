@@ -88,11 +88,11 @@ const Profile = () => {
     console.log(values);
     const url = await uploadFile(values.avatar.file.originFileObj);
     try {
-      const response = await api.post("/authentication/register", {
+      const response = await api.post("/profile", {
         ...values,
         avatar: url,
       });
-      toast.success("Register sucessfully");
+      toast.success("Update profile sucessfully");
       navigate("/login");
     } catch (error) {
       let message = "";
@@ -105,14 +105,14 @@ const Profile = () => {
     }
   };
   return (
-    <div className="background">
-      <div className="background-left">
+    <div className="profile">
+      <div className="profile-left">
         <img
           src="https://images.unsplash.com/photo-1551892644-51a6e2e8fc65?q=80&w=1894&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
           alt=""
         />
       </div>
-      <div className="background-right">
+      <div className="profile-right">
         <h1>Profile</h1>
         <Form
           {...formItemLayout}

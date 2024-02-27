@@ -23,8 +23,14 @@ function App() {
       element: <Register />,
     },
     {
-      path: "/dashboard",
+      path: "dashboard",
       element: <Dashboard />,
+      children: [
+        {
+          path: "profile",
+          element: <Profile />,
+        },
+      ],
     },
     {
       path: "/profile",
