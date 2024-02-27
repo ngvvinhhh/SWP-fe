@@ -128,7 +128,27 @@ const Profile = () => {
           }}
           onFinish={onFinish}
         >
-          <Form.Item label="Avatar" name="avatar"></Form.Item>
+          <Form.Item
+            label="Avatar"
+            name="avatar"
+            rules={[
+              {
+                required: true,
+                message: "Please input avatar!",
+              },
+            ]}
+          >
+            <Upload
+              action="https://run.mocky.io/v3/435e224c-44fb-4773-9faf-380c5e6a2188"
+              listType="picture-card"
+              fileList={fileList}
+              onPreview={handlePreview}
+              onChange={handleChange}
+              maxCount={1}
+            >
+              {fileList.length >= 8 ? null : uploadButton}
+            </Upload>
+          </Form.Item>
 
           <Row gutter={12}>
             <Col span={12}>
