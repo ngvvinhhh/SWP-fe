@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import "./App.css";
 import axios from "axios";
 import { getAuth, signInWithPopup } from "firebase/auth";
-import { provider } from "./config/firebase";
+//import { provider } from "./config/firebase";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Login from "./page/login";
 import Register from "./page/register";

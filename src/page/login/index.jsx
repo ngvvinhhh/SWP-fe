@@ -1,9 +1,21 @@
 import { Button, Checkbox, Form, Input } from "antd";
 import "./index.scss";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import api from "../../config/axios";
 const Login = () => {
-  const onFinish = (values) => {
-    console.log(values);
+  const navigate = useNavigate();
+  const onFinish = async (values) => {
+    try {
+      const response = await api.post("/authentication/login", values);
+      console.log(response);
+      //   dispatch(login(response.data));
+      toast.success("Login successfully");
+      navigate("/register");
+    } catch (e) {
+      console.log(e);
+      toast.error("Login fail");
+    }
   };
   return (
     <div className="background">
@@ -35,7 +47,7 @@ const Login = () => {
         >
           <Form.Item
             label="Username"
-            name="username"
+            name="userName"
             rules={[
               {
                 required: true,

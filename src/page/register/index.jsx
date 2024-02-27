@@ -16,6 +16,10 @@ import {
   TreeSelect,
   Upload,
 } from "antd";
+import { Link, useNavigate } from "react-router-dom";
+import uploadFile from "../../utils/upload";
+import api from "../../config/axios";
+import { toast } from "react-toastify";
 const { RangePicker } = DatePicker;
 const formItemLayout = {
   labelCol: {
@@ -41,6 +45,7 @@ const Register = () => {
   const [previewImage, setPreviewImage] = useState("");
   const [previewTitle, setPreviewTitle] = useState("");
   const [fileList, setFileList] = useState([]);
+  const navigate = useNavigate();
   const getBase64 = (file) =>
     new Promise((resolve, reject) => {
       const reader = new FileReader();
@@ -79,8 +84,25 @@ const Register = () => {
     );
   };
   const handleChange = ({ fileList: newFileList }) => setFileList(newFileList);
-  const onFinish = (values) => {
+  const onFinish = async (values) => {
     console.log(values);
+    const url = await uploadFile(values.avatar.file.originFileObj);
+    try {
+      const response = await api.post("/authentication/register", {
+        ...values,
+        avatar: url,
+      });
+      toast.success("Register sucessfully");
+      navigate("/login");
+    } catch (error) {
+      let message = "";
+      if (error.response.data.includes(values.userName)) {
+        message = "Duplicate username";
+      } else {
+        message = "Duplicate email";
+      }
+      toast.error(message);
+    }
   };
   return (
     <div className="background">
@@ -173,7 +195,7 @@ const Register = () => {
 
           <Form.Item
             label="Username"
-            name="username"
+            name="userName"
             rules={[
               {
                 required: true,
@@ -194,15 +216,28 @@ const Register = () => {
               },
             ]}
           >
-            <Input />
+            <Input.Password />
           </Form.Item>
           <Form.Item
-            label="Fullname"
-            name="fullname"
+            label="Full name"
+            name="fullName"
             rules={[
               {
                 required: true,
                 message: "Please input fullname!",
+              },
+            ]}
+          >
+            <Input />
+          </Form.Item>
+
+          <Form.Item
+            label="Phone number"
+            name="phoneNumber"
+            rules={[
+              {
+                required: true,
+                message: "Please input Phone number!",
               },
             ]}
           >
@@ -223,6 +258,9 @@ const Register = () => {
           </Form.Item>
 
           <Form.Item>
+            <p>
+              Have an account? <Link to={"/login"}>Sign in</Link>
+            </p>
             <Row justify={"center"}>
               <Button type="primary" htmlType="signIn">
                 Sign up
