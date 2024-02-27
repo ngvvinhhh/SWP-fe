@@ -3,15 +3,18 @@ import "./index.scss";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import api from "../../config/axios";
+import { useDispatch } from "react-redux";
+import { login } from "../../redux/features/userSlice";
 const Login = () => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const onFinish = async (values) => {
     try {
       const response = await api.post("/authentication/login", values);
       console.log(response);
-      //   dispatch(login(response.data));
+      dispatch(login(response.data));
       toast.success("Login successfully");
-      navigate("/register");
+      navigate("/dashboard");
     } catch (e) {
       console.log(e);
       toast.error("Login fail");

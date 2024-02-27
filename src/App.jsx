@@ -6,6 +6,8 @@ import { getAuth, signInWithPopup } from "firebase/auth";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Login from "./page/login";
 import Register from "./page/register";
+import Dashboard from "./component/dashboard";
+import Profile from "./page/profile";
 
 function App() {
   //useEffect : dinh nghia function chay khi nao
@@ -19,6 +21,14 @@ function App() {
     {
       path: "/register",
       element: <Register />,
+    },
+    {
+      path: "/dashboard",
+      element: <Dashboard />,
+    },
+    {
+      path: "/profile",
+      element: <Profile />,
     },
   ]);
 
