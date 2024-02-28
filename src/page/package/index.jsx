@@ -122,28 +122,42 @@ const Service = () => {
   const dataSource = [
     {
       key: '1',
-      picture: 'Mike',
-      service: 32,
+      service: 'Sườn',
+      discription:'sườn nướng',
+      picture: 'acb',
       action: '10 Downing Street',
     },
     {
       key: '2',
-      picture: 'John',
-      service: 42,
+      service: 'Bì',
+      discription:'Bì luộc',
+      picture: 'bcd',
+      action: '10 Downing Street',
+    },
+    {
+      key: '3',
+      service: 'Chả',
+      discription:'Chả chiên',
+      picture: 'bcd',
       action: '10 Downing Street',
     },
   ];
 
   const columns = [
     {
-      title: 'Picture',
-      dataIndex: 'picture',
-      key: 'picture',
-    },
-    {
       title: 'Service',
       dataIndex: 'service',
       key: 'service',
+    },
+    {
+      title: 'Discription',
+      dataIndex: 'discription',
+      key: 'discription',
+    },
+    {
+      title: 'Picture',
+      dataIndex: 'picture',
+      key: 'picture',
     },
     {
       title: 'Action',
