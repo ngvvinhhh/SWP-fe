@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./index.scss";
 import { PlusOutlined } from "@ant-design/icons";
 import {
@@ -20,6 +20,9 @@ import { Link, useNavigate } from "react-router-dom";
 import uploadFile from "../../utils/upload";
 import api from "../../config/axios";
 import { toast } from "react-toastify";
+import { useForm } from "antd/es/form/Form";
+import { changeAvatar } from "../../redux/features/userSlice";
+import { useDispatch } from "react-redux";
 const { RangePicker } = DatePicker;
 const formItemLayout = {
   labelCol: {
@@ -45,7 +48,8 @@ const Profile = () => {
   const [previewImage, setPreviewImage] = useState("");
   const [previewTitle, setPreviewTitle] = useState("");
   const [fileList, setFileList] = useState([]);
-  const navigate = useNavigate();
+  const [form] = useForm()
+  const dispatch = useDispatch();
   const getBase64 = (file) =>
     new Promise((resolve, reject) => {
       const reader = new FileReader();
@@ -86,14 +90,15 @@ const Profile = () => {
   const handleChange = ({ fileList: newFileList }) => setFileList(newFileList);
   const onFinish = async (values) => {
     console.log(values);
-    const url = await uploadFile(values.avatar.file.originFileObj);
+    const url = values.avatar.file ? await uploadFile(values.avatar.file.originFileObj) : values.avatar;
     try {
-      const response = await api.post("/profile", {
+      const response = await api.put("/profile", {
         ...values,
         avatar: url,
+        
       });
       toast.success("Update profile sucessfully");
-      navigate("/login");
+      dispatch(changeAvatar(url))
     } catch (error) {
       let message = "";
       if (error.response.data.includes(values.userName)) {
@@ -104,6 +109,23 @@ const Profile = () => {
       toast.error(message);
     }
   };
+
+  async function fetchProfile(){
+   const response = await api.get('profile')
+    console.log(response.data);
+    form.setFieldsValue(response.data)
+    setFileList([ {
+      uid: '-1',
+      name: 'image.png',
+      status: 'done',
+      url: response.data.avatar,
+    },])
+  }
+
+useEffect(()=> {
+  fetchProfile();
+},[])
+
   return (
     <div className="profile">
       <div className="profile-left">
@@ -127,6 +149,7 @@ const Profile = () => {
             span: 24,
           }}
           onFinish={onFinish}
+          form = {form}
         >
           <Form.Item
             label="Avatar"
@@ -162,7 +185,7 @@ const Profile = () => {
                   },
                 ]}
               >
-                <Select
+                <Select disabled
                   style={{ width: "100%" }}
                   options={[
                     { value: "CUSTOMER", label: "Customer" },
@@ -195,29 +218,19 @@ const Profile = () => {
 
           <Form.Item
             label="Username"
-            name="userName"
+            name="username"
             rules={[
               {
                 required: true,
                 message: "Please input usernname!",
               },
             ]}
+            
           >
-            <Input />
+            <Input disabled/>
           </Form.Item>
 
-          <Form.Item
-            label="Password"
-            name="password"
-            rules={[
-              {
-                required: true,
-                message: "Please input password!",
-              },
-            ]}
-          >
-            <Input.Password />
-          </Form.Item>
+          
           <Form.Item
             label="Full name"
             name="fullName"
@@ -258,12 +271,10 @@ const Profile = () => {
           </Form.Item>
 
           <Form.Item>
-            <p>
-              Have an account? <Link to={"/login"}>Sign in</Link>
-            </p>
+        
             <Row justify={"center"}>
-              <Button type="primary" htmlType="signIn">
-                Sign up
+              <Button type="primary" htmlType="update">
+                Update
               </Button>
             </Row>
           </Form.Item>

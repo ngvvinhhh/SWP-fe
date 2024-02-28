@@ -29,17 +29,30 @@ function getItem(label, key, icon, children) {
     label,
   };
 }
-const items = [
-  getItem("Party", "1", <PieChartOutlined />),
-  getItem("Wallet", "2", <DesktopOutlined />),
-  getItem("User", "sub1", <UserOutlined />, [
-    getItem("Tom", "3"),
-    getItem("Bill", "4"),
-    getItem("Alex", "5"),
-  ]),
-];
+
 
 const Dashboard = () => {
+
+  const itemsHost = [
+    getItem("Package", "1", <PieChartOutlined />,),
+    getItem("Wallet", "2", <DesktopOutlined />),
+    getItem("User", "sub1", <UserOutlined />, [
+      getItem("Tom", "3"),
+      getItem("Bill", "4"),
+      getItem("Alex", "5"),
+    ]),
+  ];
+
+  const itemsAdmin = [
+    getItem("Host", "1", <PieChartOutlined />),
+    getItem("Data", "2", <DesktopOutlined />),
+    getItem("Account", "sub1", <UserOutlined />, [
+      getItem("Tom", "3"),
+      getItem("Bill", "4"),
+      getItem("Alex", "5"),
+    ]),
+  ];
+
   const [collapsed, setCollapsed] = useState(false);
   const navigate = useNavigate();
   const {
@@ -52,7 +65,7 @@ const Dashboard = () => {
   const menu = [
     {
       key: "1",
-      label: <Link to={"/profile"}>Profile</Link>,
+      label: <Link to={"/dashboard/profile"}>Profile</Link>,
     },
 
     {
@@ -67,6 +80,7 @@ const Dashboard = () => {
         </p>
       ),
     },
+
   ];
 
   useEffect(() => {
@@ -91,7 +105,7 @@ const Dashboard = () => {
           theme="dark"
           defaultSelectedKeys={["1"]}
           mode="inline"
-          items={items}
+          items={user?.role == "HOST"?itemsHost:itemsAdmin}
         />
       </Sider>
       <Layout>

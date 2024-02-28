@@ -1,10 +1,16 @@
-import { Button, Checkbox, Form, Input } from "antd";
+import { Button, Checkbox, Flex, Form, Input } from "antd";
 import "./index.scss";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import api from "../../config/axios";
-import { useDispatch } from "react-redux";
+import { Provider, useDispatch } from "react-redux";
 import { login } from "../../redux/features/userSlice";
+import { getAuth, signInWithPopup } from "firebase/auth";
+import { GoogleAuthProvider } from "firebase/auth";
+
+const provider = new GoogleAuthProvider();
+
+//import { provider } from "./config/firebase";
 const Login = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -15,10 +21,30 @@ const Login = () => {
       dispatch(login(response.data));
       toast.success("Login successfully");
       navigate("/dashboard");
+      localStorage.setItem('token', response.data.token)
     } catch (e) {
       console.log(e);
       toast.error("Login fail");
     }
+  };
+
+  const loginGoogle = () => {
+
+    const auth = getAuth();
+    signInWithPopup(auth, provider)
+      .then(async(result) => {
+        const token = await result.user.getIdToken()
+        const response = await api.post('/authentication/logingg', {
+          token: token
+        })
+        dispatch(login(response.data));
+        toast.success("Login successfully");
+        navigate("/dashboard");
+        localStorage.setItem('token', response.data.token)
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
   return (
     <div className="background">
@@ -96,6 +122,31 @@ const Login = () => {
             </p>
             <Button type="primary" htmlType="submit">
               Sign in
+            </Button>
+          </Form.Item>
+          <Form.Item
+            wrapperCol={{
+              offset: 8,
+              span: 16,
+            }}
+          >
+            <Button
+            
+              onClick={loginGoogle}
+            >
+              <div   style={{
+                display: 'flex',
+                justifyContent: "space-between",
+                alignItems: "center",
+                gap:10
+              }}>
+                <img
+                  width={20}
+                  src="https://th.bing.com/th/id/OIP.lsGmVmOX789951j9Km8RagHaHa?rs=1&pid=ImgDetMain"
+                  alt=""
+                />
+                Login with google
+              </div>
             </Button>
           </Form.Item>
         </Form>
