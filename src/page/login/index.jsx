@@ -57,6 +57,7 @@ const Login = () => {
       <div className="background-right">
         <h1>Sign in</h1>
 
+
         <Form
           name="basic"
           labelCol={{
@@ -100,7 +101,8 @@ const Login = () => {
             <Input.Password />
           </Form.Item>
 
-          <Form.Item
+            
+            <Form.Item 
             name="remember"
             valuePropName="checked"
             wrapperCol={{
@@ -111,7 +113,7 @@ const Login = () => {
             <Checkbox>Remember me</Checkbox>
           </Form.Item>
 
-          <Form.Item
+          <Form.Item 
             wrapperCol={{
               offset: 8,
               span: 16,
@@ -124,7 +126,7 @@ const Login = () => {
               Sign in
             </Button>
           </Form.Item>
-          <Form.Item
+          <Form.Item 
             wrapperCol={{
               offset: 8,
               span: 16,
@@ -149,6 +151,8 @@ const Login = () => {
               </div>
             </Button>
           </Form.Item>
+            
+
         </Form>
       </div>
     </div>

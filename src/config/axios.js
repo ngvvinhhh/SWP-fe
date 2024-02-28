@@ -1,6 +1,6 @@
 import axios from "axios";
-const baseUrl = "http://localhost:8081/";
-//const baseUrl = "http://birthdaykids.fun:8081/";
+//const baseUrl = "http://localhost:8081/";
+const baseUrl = "http://birthdaykids.fun:8081/";
 
 const config = {
   baseUrl,

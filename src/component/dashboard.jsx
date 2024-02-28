@@ -26,7 +26,7 @@ function getItem(label, key, icon, children) {
     key,
     icon,
     children,
-    label,
+    label: <Link to ={key}>{label}</Link>,
   };
 }
 
@@ -34,13 +34,9 @@ function getItem(label, key, icon, children) {
 const Dashboard = () => {
 
   const itemsHost = [
-    getItem("Package", "1", <PieChartOutlined />,),
-    getItem("Wallet", "2", <DesktopOutlined />),
-    getItem("User", "sub1", <UserOutlined />, [
-      getItem("Tom", "3"),
-      getItem("Bill", "4"),
-      getItem("Alex", "5"),
-    ]),
+    getItem("Package", "/dashboard/package", <PieChartOutlined />,),
+    getItem("Statistics", "/dashboard/statistics", <DesktopOutlined />),
+    
   ];
 
   const itemsAdmin = [
@@ -166,7 +162,7 @@ const Dashboard = () => {
             textAlign: "center",
           }}
         >
-          Ant Design ©{new Date().getFullYear()} Created by Ant UED
+          BirthdayForKids ©{new Date().getFullYear()} Created by Ant UED
         </Footer>
       </Layout>
     </Layout>

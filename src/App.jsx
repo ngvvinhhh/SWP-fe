@@ -7,6 +7,8 @@ import Login from "./page/login";
 import Register from "./page/register";
 import Dashboard from "./component/dashboard";
 import Profile from "./page/profile";
+import Package from "./page/package";
+import Statistics from "./page/statistics";
 
 function App() {
   //useEffect : dinh nghia function chay khi nao
@@ -29,7 +31,14 @@ function App() {
           path: "profile",
           element: <Profile />,
         },
-
+        {
+          path: "package",
+          element: <Package />,
+        },
+        {
+          path: "statistics",
+          element: <Statistics />,
+        },
       ],
     },
   ]);
