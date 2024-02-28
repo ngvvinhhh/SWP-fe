@@ -9,7 +9,8 @@ import Dashboard from "./component/dashboard";
 import Profile from "./page/profile";
 import Package from "./page/package";
 import Statistics from "./page/statistics";
-
+import Report from "./page/report";
+import Account from "./page/account";
 function App() {
   //useEffect : dinh nghia function chay khi nao
 
@@ -38,6 +39,14 @@ function App() {
         {
           path: "statistics",
           element: <Statistics />,
+        },
+        {
+          path: "report",
+          element: <Report />,
+        },
+        {
+          path: "account",
+          element: <Account />,
         },
       ],
     },

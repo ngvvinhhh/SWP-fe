@@ -40,13 +40,8 @@ const Dashboard = () => {
   ];
 
   const itemsAdmin = [
-    getItem("Host", "1", <PieChartOutlined />),
-    getItem("Data", "2", <DesktopOutlined />),
-    getItem("Account", "sub1", <UserOutlined />, [
-      getItem("Tom", "3"),
-      getItem("Bill", "4"),
-      getItem("Alex", "5"),
-    ]),
+    getItem("Report", "/dashboard/report", <PieChartOutlined />),
+    getItem("Account", "/dashboard/account", <UserOutlined />),
   ];
 
   const [collapsed, setCollapsed] = useState(false);
@@ -162,7 +157,7 @@ const Dashboard = () => {
             textAlign: "center",
           }}
         >
-          BirthdayForKids ©{new Date().getFullYear()} Created by Ant UED
+          BirthdayForKids ©{new Date().getFullYear()} Created by VVinh
         </Footer>
       </Layout>
     </Layout>

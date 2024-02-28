@@ -21,7 +21,7 @@ import uploadFile from "../../utils/upload";
 import api from "../../config/axios";
 import { toast } from "react-toastify";
 import { useForm } from "antd/es/form/Form";
-import { changeAvatar } from "../../redux/features/userSlice";
+import { changeAvatar} from "../../redux/features/userSlice";
 import { useDispatch } from "react-redux";
 const { RangePicker } = DatePicker;
 const formItemLayout = {
